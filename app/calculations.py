@@ -14,6 +14,9 @@ def divide(num_1: int, num_2: int):
     return num_1 / num_2
 
 
+class insufficienFunds(Exception):
+    pass
+
 class BankAccount:
     def __init__(self, starting_balance=0):
         self.balance = starting_balance
@@ -23,7 +26,7 @@ class BankAccount:
 
     def withdraw(self, amount):
         if amount > self.balance:
-            raise Exception("Insufficient funds in account")
+            raise insufficienFunds("Insufficient funds in account")
         self.balance -= amount
 
     def collect_interest(self):
