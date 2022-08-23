@@ -1,8 +1,8 @@
-"""add phone number
+"""add_phone_number
 
-Revision ID: bab1b192df72
-Revises: 649a2dfd9ba5
-Create Date: 2022-07-27 11:19:28.869272
+Revision ID: ef4936649a3d
+Revises: a66caede0ece
+Create Date: 2022-08-23 23:00:18.430057
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = "bab1b192df72"
-down_revision = "649a2dfd9ba5"
+revision = 'ef4936649a3d'
+down_revision = 'a66caede0ece'
 branch_labels = None
 depends_on = None
 
