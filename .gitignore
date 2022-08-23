@@ -5,3 +5,4 @@ venv/
 fastapidir/
 .env
 bk/
+tests/
