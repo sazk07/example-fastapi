@@ -17,6 +17,7 @@ def divide(num_1: int, num_2: int):
 class insufficienFunds(Exception):
     pass
 
+
 class BankAccount:
     def __init__(self, starting_balance=0):
         self.balance = starting_balance
