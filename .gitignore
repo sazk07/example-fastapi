@@ -6,3 +6,4 @@ fastapidir/
 .env
 bk/
 tests/
+.pytest_cache
