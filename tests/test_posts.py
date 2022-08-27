@@ -140,7 +140,19 @@ def test_update_other_user_post(test_user, authorized_client, test_posts):
     response = authorized_client.put(f"/posts/{test_posts[3].posts_id}", json=data)
     assert response.status_code == 403
 
-def test_unauthorized_user_update_post(client,test_user,test_posts):
+
+def test_unauthorized_user_update_post(client, test_user, test_posts):
     """test to check if unauthorized user is forbidden from updating posts"""
     response = client.put(f"/posts/{test_posts[0].posts_id}")
     assert response.status_code == 401
+
+
+def test_update_post_non_exist(test_user, authorized_client, test_posts):
+    """test to update a post that does not exist"""
+    data = {
+        "title": "updated title",
+        "posts_content": "updated content",
+        "posts_id": test_posts[0].posts_id,
+    }
+    response = authorized_client.put(f"/posts/800000000", json=data)
+    assert response.status_code == 404
