@@ -17,5 +17,11 @@ def test_delete_vote(authorized_client, test_posts, test_vote):
     response = authorized_client.post(
         "/vote/", json={"posts_id": test_posts[3].posts_id, "votes_dir": 0}
     )
-    print(response.json())
     assert response.status_code == 201
+
+def test_delete_vote_non_exist(authorized_client, test_posts):
+    """test to delete a post that does not exist"""
+    response = authorized_client.post(
+        "/vote/", json={"posts_id": test_posts[3].posts_id, "votes_dir": 0}
+    )
+    assert response.status_code == 404
