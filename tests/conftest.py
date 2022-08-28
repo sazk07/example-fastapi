@@ -29,6 +29,7 @@ def session():
 @pytest.fixture
 def client(session):
     """persist unauthorized client"""
+
     def override_get_db():
         """call session for client object"""
         try:
@@ -53,7 +54,7 @@ def test_user(client):
 
 @pytest.fixture
 def test_user2(client):
-    """ creates another user for testing"""
+    """creates another user for testing"""
     user_data = {"email": "user002@gmail.com", "password": "password002"}
     response = client.post("/users/", json=user_data)
     assert response.status_code == 201
