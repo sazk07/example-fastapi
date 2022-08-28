@@ -16,6 +16,7 @@ testingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture
 def session():
+    """db session initiate"""
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     db = testingSessionLocal()
@@ -27,7 +28,9 @@ def session():
 
 @pytest.fixture
 def client(session):
+    """persist unauthorized client"""
     def override_get_db():
+        """call session for client object"""
         try:
             yield session
         finally:
@@ -39,6 +42,7 @@ def client(session):
 
 @pytest.fixture
 def test_user(client):
+    """creates a user for testing"""
     user_data = {"email": "user001@gmail.com", "password": "password001"}
     response = client.post("/users/", json=user_data)
     assert response.status_code == 201
@@ -49,6 +53,7 @@ def test_user(client):
 
 @pytest.fixture
 def test_user2(client):
+    """ creates another user for testing"""
     user_data = {"email": "user002@gmail.com", "password": "password002"}
     response = client.post("/users/", json=user_data)
     assert response.status_code == 201
@@ -59,17 +64,20 @@ def test_user2(client):
 
 @pytest.fixture
 def token(test_user):
+    """creates an auth token for testing"""
     return create_access_token({"user_id": test_user["users_id"]})
 
 
 @pytest.fixture
 def authorized_client(client, token):
+    """creates client + auth token"""
     client.headers = {**client.headers, "Authorization": f"Bearer {token}"}
     return client
 
 
 @pytest.fixture
 def test_posts(test_user, session, test_user2):
+    """creates posts for us to test API"""
     # define some posts data (in dict format) for us to test
     posts_data = [
         {
@@ -111,6 +119,7 @@ def test_posts(test_user, session, test_user2):
 
 @pytest.fixture
 def test_vote(test_user, test_posts, session):
+    """commits votes on test posts"""
     new_vote = models.Votes(
         posts_id=test_posts[3].posts_id, users_id=test_user["users_id"]
     )
